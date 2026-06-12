@@ -1,93 +1,757 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barakat Network — Объединение Telegram-проектов</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ─────────────────────────────── */
+    :root {
+      --bg:        #080d14;
+      --surface:   #0e1621;
+      --card:      #121c2a;
+      --border:    rgba(99,179,237,0.12);
+      --gold:      #f5c842;
+      --gold-dim:  rgba(245,200,66,0.12);
+      --blue:      #63b3ed;
+      --blue-dim:  rgba(99,179,237,0.08);
+      --text:      #e2e8f0;
+      --muted:     #718096;
+      --display:   'Unbounded', sans-serif;
+      --body:      'Inter', sans-serif;
+      --radius:    20px;
+      --glow:      0 0 60px rgba(245,200,66,0.08);
+    }
+
+    /* ─── RESET ──────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── NOISE TEXTURE OVERLAY ──────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── AURORA GLOW ─────────────────────────── */
+    .aurora {
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 500px;
+      background: radial-gradient(ellipse at 50% 50%, rgba(245,200,66,0.07) 0%, rgba(99,179,237,0.05) 40%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      animation: pulse 8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+      50%       { opacity: 0.6; transform: translateX(-50%) scale(1.1); }
+    }
+
+    /* ─── LAYOUT ──────────────────────────────── */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─── NAV ─────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8,13,20,0.8);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 1.1rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--gold), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ─── HERO ────────────────────────────────── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 120px 24px 80px;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: var(--gold-dim);
+      border: 1px solid rgba(245,200,66,0.25);
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 32px;
+    }
+    .hero h1 {
+      font-family: var(--display);
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff 30%, var(--gold) 70%, var(--blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 24px;
+    }
+    .hero p {
+      max-width: 620px;
+      margin: 0 auto 48px;
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .hero-cta-row {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-family: var(--body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--gold), #e0a800);
+      color: #080d14;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(245,200,66,0.25);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(245,200,66,0.35); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-family: var(--body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover {
+      background: var(--blue-dim);
+      border-color: rgba(99,179,237,0.3);
+      transform: translateY(-2px);
+    }
+
+    /* ─── STAT STRIP ──────────────────────────── */
+    .stats {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .stats-inner {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      gap: 24px;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: var(--display);
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--gold), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ─── ABOUT ───────────────────────────────── */
+    .about {
+      position: relative;
+      z-index: 1;
+      padding: 100px 24px;
+    }
+    .section-tag {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .about-text p { color: var(--muted); margin-bottom: 16px; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-visual {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--glow);
+    }
+    .about-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+    .about-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+    .about-list .icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--gold-dim);
+      border: 1px solid rgba(245,200,66,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      margin-top: 1px;
+    }
+    .about-list .icon.blue {
+      background: var(--blue-dim);
+      border-color: rgba(99,179,237,0.2);
+    }
+
+    /* ─── PROJECTS GRID ───────────────────────── */
+    .projects {
+      position: relative;
+      z-index: 1;
+      padding: 0 24px 100px;
+    }
+    .projects-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 56px;
+    }
+    .projects-header p { color: var(--muted); }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(245,200,66,0.2); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+    .card:hover::before { opacity: 1; }
+    .card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .badge-gold { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(245,200,66,0.2); }
+    .badge-blue { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(99,179,237,0.2); }
+    .badge-green { background: rgba(72,187,120,0.1); color: #68d391; border: 1px solid rgba(72,187,120,0.2); }
+    .badge-purple { background: rgba(159,122,234,0.1); color: #b794f4; border: 1px solid rgba(159,122,234,0.2); }
+    .badge-pink { background: rgba(237,100,166,0.1); color: #f687b3; border: 1px solid rgba(237,100,166,0.2); }
+    .card h3 {
+      font-family: var(--display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+    }
+    .card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; flex: 1; }
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-top: 4px;
+      transition: gap 0.2s;
+    }
+    .card-link:hover { gap: 12px; }
+    .card-link svg { transition: transform 0.2s; }
+    .card-link:hover svg { transform: translateX(3px); }
+
+    /* featured card */
+    .card.featured {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: center;
+      gap: 40px;
+      background: linear-gradient(135deg, #121c2a 0%, #0e1821 100%);
+      border-color: rgba(245,200,66,0.18);
+    }
+    .card.featured .card-content { flex: 1; }
+    .card.featured .card-visual {
+      flex-shrink: 0;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--gold-dim), transparent 70%);
+      border: 1px solid rgba(245,200,66,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+
+    /* ─── SAFETY SECTION ──────────────────────── */
+    .safety {
+      position: relative;
+      z-index: 1;
+      padding: 0 24px 100px;
+    }
+    .safety-box {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .safety-content { padding: 56px; }
+    .safety-content p { color: var(--muted); margin-bottom: 24px; }
+    .safety-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .pill {
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      background: rgba(72,187,120,0.08);
+      color: #68d391;
+      border: 1px solid rgba(72,187,120,0.2);
+    }
+    .safety-visual {
+      background: linear-gradient(135deg, rgba(72,187,120,0.06) 0%, rgba(99,179,237,0.06) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      border-left: 1px solid var(--border);
+    }
+    .shield-graphic {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(72,187,120,0.15), transparent 70%);
+      border: 2px solid rgba(72,187,120,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    /* ─── FOOTER ──────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 56px 24px 32px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .footer-brand p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      max-width: 300px;
+      margin-top: 12px;
+    }
+    .footer-logo {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--gold), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .footer-links-group h4 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .footer-links-group ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links-group a {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .footer-links-group a:hover { opacity: 1; }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p { font-size: 0.82rem; color: var(--muted); }
+
+    /* ─── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .card.featured { flex-direction: column; }
+      .card.featured .card-visual { width: 120px; height: 120px; font-size: 3rem; }
+      .safety-box { grid-template-columns: 1fr; }
+      .safety-visual { border-left: none; border-top: 1px solid var(--border); }
+      .footer-top { flex-direction: column; }
+    }
+
+    /* ─── SCROLL ANIMATIONS ───────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<div class="aurora"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">🚀 Barakat</span>
+    <ul class="nav-links">
+      <li><a href="#about">О проекте</a></li>
+      <li><a href="#projects">Проекты</a></li>
+      <li><a href="#safety">Безопасность</a></li>
+    </ul>
+    <a href="https://t.me/BARAKAT_Community" class="btn-secondary" target="_blank" style="padding:10px 20px;font-size:0.85rem;">
+      Telegram →
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
 <section class="hero">
-<h1>🚀 Barakat Network</h1>
-
-<p>
-Объединение Telegram-проектов для покупки и продажи техники,
-безопасных сделок, полезной информации и развития собственных инициатив.
-</p>
-
-<div style="
-max-width:1000px;
-margin:40px auto 0;
-padding:30px;
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.1);
-border-radius:24px;
-text-align:left;
-line-height:1.8;
-color:#cbd5e1;">
-
-<h2 style="text-align:center;color:white;margin-bottom:20px;">
-📢 О проекте
-</h2>
-
-<p>
-Проекты <b>Barakat</b> продолжают активно развиваться и объединять всё больше людей.
-Сегодня в нашу сеть входят не только площадки для покупки и продажи техники,
-но и сообщества, направленные на безопасность пользователей, обмен полезной
-информацией и развитие новых инициатив.
-</p>
-
-<p>
-📱 <b>Barakat OLX Алматы</b> — сообщество для покупки, продажи и обмена техники,
-где ежедневно публикуются новые объявления и выгодные предложения.
-</p>
-
-<p>
-🏙️ <b>Барахолка Астана</b> — площадка для жителей столицы, позволяющая быстро
-найти покупателей, продавцов и интересные товары.
-</p>
-
-<p>
-🛡️ <b>Анти-База Мошенников</b> — проект для предупреждения пользователей о
-мошенниках, подозрительных продавцах и схемах обмана. Наша цель —
-сделать сделки максимально безопасными.
-</p>
-
-<p>
-🛒 <b>Halif Store</b> — развивающийся проект, предлагающий товары и услуги,
-а также новые возможности для своих клиентов и подписчиков.
-</p>
-
-<p>
-🤝 <b>Barakat Community</b> — общее сообщество участников проектов Barakat,
-место для общения, обсуждений и обмена опытом.
-</p>
-
-<p>
-Благодаря поддержке подписчиков наши проекты растут с каждым днём.
-Мы продолжаем улучшать качество, безопасность и удобство для всех участников.
-</p>
-
-<p style="text-align:center;margin-top:15px;">
-🚀 Впереди ещё больше обновлений, новых возможностей и интересных проектов.
-Спасибо каждому, кто остаётся с нами!
-</p>
-
-</div>
+  <div class="container">
+    <span class="hero-eyebrow">Telegram-сеть · Алматы & Астана</span>
+    <h1>Barakat Network</h1>
+    <p>Объединение Telegram-проектов для покупки и продажи техники, безопасных сделок, полезной информации и развития собственных инициатив.</p>
+    <div class="hero-cta-row">
+      <a href="https://t.me/BARAKAT_Community" class="btn-primary" target="_blank">
+        🤝 Войти в сообщество
+      </a>
+      <a href="#projects" class="btn-secondary">
+        Посмотреть проекты
+      </a>
+    </div>
+  </div>
 </section>
-<div class="card">
-<h2>🛒 Halif Store</h2>
 
-<p>
-Проект, который продолжает развиваться и радовать своих клиентов
-новыми предложениями, товарами и возможностями.
-</p>
-
-<a href="https://t.me/Halifstore" class="btn" target="_blank">
-Перейти на канал
-</a>
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Активных проектов</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Города</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">24/7</div>
+      <div class="stat-label">Публикации объявлений</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0₸</div>
+      <div class="stat-label">Вступление бесплатно</div>
+    </div>
+  </div>
 </div>
 
-<div class="card">
-<h2>🤝 Barakat Community</h2>
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <span class="section-tag">О проекте</span>
+      <h2 class="section-title">Больше, чем просто объявления</h2>
+      <p>Проекты <strong>Barakat</strong> продолжают активно развиваться и объединять всё больше людей. Сегодня в нашу сеть входят не только площадки для покупки и продажи техники, но и сообщества, направленные на безопасность пользователей и обмен полезной информацией.</p>
+      <p>Благодаря поддержке подписчиков наши проекты растут с каждым днём. Мы продолжаем улучшать качество, безопасность и удобство для всех участников.</p>
+    </div>
+    <div class="about-visual reveal">
+      <ul class="about-list">
+        <li>
+          <span class="icon">📱</span>
+          <div><strong>Barakat OLX Алматы</strong><br><span style="color:var(--muted);font-size:0.88rem;">Ежедневные объявления и выгодные предложения по технике</span></div>
+        </li>
+        <li>
+          <span class="icon blue">🏙️</span>
+          <div><strong>Барахолка Астана</strong><br><span style="color:var(--muted);font-size:0.88rem;">Площадка для жителей столицы</span></div>
+        </li>
+        <li>
+          <span class="icon">🛡️</span>
+          <div><strong>Анти-База Мошенников</strong><br><span style="color:var(--muted);font-size:0.88rem;">Защита от мошенников и схем обмана</span></div>
+        </li>
+        <li>
+          <span class="icon blue">🛒</span>
+          <div><strong>Halif Store</strong><br><span style="color:var(--muted);font-size:0.88rem;">Товары, услуги и новые возможности</span></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-<p>
-Основное сообщество проектов Barakat для общения участников,
-обсуждения идей, новостей и дальнейшего развития сети.
-</p>
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="projects-header reveal">
+    <span class="section-tag">Наши проекты</span>
+    <h2 class="section-title">Выберите нужный канал</h2>
+    <p>Каждый проект решает конкретную задачу — от поиска техники до защиты от мошенников.</p>
+  </div>
 
-<a href="https://t.me/BARAKAT_Community" class="btn" target="_blank">
-Перейти в сообщество
-</a>
-</div>
+  <div class="cards-grid">
+
+    <!-- Featured: Community -->
+    <div class="card featured reveal">
+      <div class="card-visual">🤝</div>
+      <div class="card-content">
+        <span class="card-badge badge-gold">Главное сообщество</span>
+        <h3>Barakat Community</h3>
+        <p>Основное сообщество проектов Barakat для общения участников, обсуждения идей, новостей и дальнейшего развития сети. Место, где собираются все участники экосистемы.</p>
+        <a href="https://t.me/BARAKAT_Community" class="card-link" target="_blank">
+          Перейти в сообщество
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- OLX Almaty -->
+    <div class="card reveal">
+      <span class="card-badge badge-blue">📱 Алматы</span>
+      <h3>Barakat OLX Алматы</h3>
+      <p>Сообщество для покупки, продажи и обмена техники. Ежедневно публикуются новые объявления и выгодные предложения.</p>
+      <a href="https://t.me/barakatOLX" class="card-link" target="_blank">
+        Открыть канал
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <!-- Astana -->
+    <div class="card reveal">
+      <span class="card-badge badge-purple">🏙️ Астана</span>
+      <h3>Барахолка Астана</h3>
+      <p>Площадка для жителей столицы — быстро найти покупателей, продавцов и интересные товары в одном месте.</p>
+      <a href="https://t.me/barakat_astana" class="card-link" target="_blank">
+        Открыть канал
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <!-- Halif Store -->
+    <div class="card reveal">
+      <span class="card-badge badge-pink">🛒 Магазин</span>
+      <h3>Halif Store</h3>
+      <p>Развивающийся проект, предлагающий товары и услуги, а также новые возможности для своих клиентов и подписчиков.</p>
+      <a href="https://t.me/Halifstore" class="card-link" target="_blank">
+        Открыть магазин
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section class="safety" id="safety">
+  <div class="safety-box reveal">
+    <div class="safety-content">
+      <span class="section-tag">Безопасность</span>
+      <h2 class="section-title">Анти-База Мошенников</h2>
+      <p>Проект для предупреждения пользователей о мошенниках, подозрительных продавцах и схемах обмана. Наша цель — сделать каждую сделку максимально безопасной.</p>
+      <a href="https://t.me/antibase_kz" class="btn-primary" target="_blank" style="width:fit-content;">
+        🛡️ Проверить продавца
+      </a>
+      <div class="safety-pills">
+        <span class="pill">Проверка продавцов</span>
+        <span class="pill">База мошенников</span>
+        <span class="pill">Схемы обмана</span>
+        <span class="pill">Анонимные жалобы</span>
+      </div>
+    </div>
+    <div class="safety-visual">
+      <div class="shield-graphic">🛡️</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">🚀 Barakat Network</div>
+        <p>Объединение Telegram-проектов для покупки, продажи и безопасных сделок в Казахстане.</p>
+      </div>
+      <div class="footer-links-group">
+        <h4>Проекты</h4>
+        <ul>
+          <li><a href="https://t.me/barakatOLX" target="_blank">Barakat OLX Алматы</a></li>
+          <li><a href="https://t.me/barakat_astana" target="_blank">Барахолка Астана</a></li>
+          <li><a href="https://t.me/Halifstore" target="_blank">Halif Store</a></li>
+          <li><a href="https://t.me/BARAKAT_Community" target="_blank">Barakat Community</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-group">
+        <h4>Безопасность</h4>
+        <ul>
+          <li><a href="https://t.me/antibase_kz" target="_blank">Анти-База Мошенников</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Barakat Network. Все права защищены.</p>
+      <p style="color:var(--gold);font-size:0.82rem;">🚀 Впереди ещё больше обновлений</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
