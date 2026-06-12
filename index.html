@@ -1,12 +1,154 @@
 <!DOCTYPE html>
-<html>
-<head> <link rel="stylesheet" href="style.css">
-<title>Namaz KZ</title>
+
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barakat Network</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#0f172a,#020617);
+color:white;
+min-height:100vh;
+}
+
+.hero{
+text-align:center;
+padding:80px 20px 50px;
+}
+
+.hero h1{
+font-size:55px;
+margin-bottom:15px;
+}
+
+.hero p{
+font-size:20px;
+color:#94a3b8;
+max-width:700px;
+margin:auto;
+}
+
+.cards{
+max-width:1200px;
+margin:auto;
+padding:30px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:25px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.1);
+border-radius:24px;
+padding:30px;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+}
+
+.card h2{
+margin-bottom:15px;
+font-size:28px;
+}
+
+.card p{
+color:#cbd5e1;
+line-height:1.7;
+margin-bottom:20px;
+}
+
+.btn{
+display:inline-block;
+padding:14px 25px;
+background:#22c55e;
+color:white;
+text-decoration:none;
+border-radius:14px;
+font-weight:600;
+}
+
+.btn:hover{
+background:#16a34a;
+}
+
+footer{
+text-align:center;
+padding:40px;
+color:#64748b;
+}
+</style>
+
 </head>
 <body>
-<h1>🕌 Barakat KZ</h1>
-<p>Время намазов по Казахстану</p>
 
-<a href="https://t.me/BARAKATOLXASTANA">Наш канал</a>
+<section class="hero">
+<h1>🚀 Barakat Network</h1>
+<p>
+Платформа полезных Telegram-сообществ для покупки и продажи техники,
+объявлений, общения и интересного контента.
+</p>
+</section>
+
+<section class="cards">
+
+<div class="card">
+<h2>📱 Barakat OLX</h2>
+<p>
+Сообщество для покупки, продажи и обмена смартфонов, ноутбуков,
+планшетов и другой электроники. Ежедневно публикуются новые объявления,
+выгодные предложения и интересные находки.
+</p>
+
+<a href="https://t.me/barakatOLX" class="btn" target="_blank">
+Перейти в канал
+</a>
+</div>
+
+<div class="card">
+<h2>🏙️ Барахолка Астана</h2>
+<p>
+Telegram-сообщество для жителей Астаны. Продажа техники, аксессуаров,
+гаджетов и других товаров. Удобная площадка для поиска покупателей
+и выгодных предложений.
+</p>
+
+<a href="https://t.me/BARAKATOLXASTANA" class="btn" target="_blank">
+Открыть группу
+</a>
+</div>
+
+<div class="card">
+<h2>💡 ABMANTI</h2>
+<p>
+Авторский проект с полезной информацией, обзорами технологий,
+интересными публикациями, новостями и различными проектами.
+Подписывайтесь, чтобы не пропустить новые материалы.
+</p>
+
+<a href="https://t.me/ABMANTI" class="btn" target="_blank">
+Подписаться
+</a>
+</div>
+
+</section>
+
+<footer>
+© 2026 Barakat Network • Казахстан
+</footer>
+
 </body>
 </html>
+
