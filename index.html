@@ -192,6 +192,47 @@
       border: 1px solid var(--border);
       transition: background 0.2s, border-color 0.2s, transform 0.2s;
     }
+
+
+    .nav-namaz-link {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px !important;
+      border-radius: 999px !important;
+      background: linear-gradient(135deg, rgba(147,112,219,0.15), rgba(201,168,76,0.1)) !important;
+      color: var(--gold) !important;
+      border: 1px solid rgba(201,168,76,0.3) !important;
+      font-weight: 600 !important;
+      font-size: 0.82rem !important;
+      transition: all 0.2s !important;
+    }
+    .nav-namaz-link:hover {
+      background: linear-gradient(135deg, rgba(147,112,219,0.25), rgba(201,168,76,0.18)) !important;
+      border-color: rgba(201,168,76,0.5) !important;
+      color: #fff !important;
+    }
+
+    .btn-namaz {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-family: var(--body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, rgba(147,112,219,0.15), rgba(201,168,76,0.1));
+      color: #c9a84c;
+      border: 1px solid rgba(147,112,219,0.35);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .btn-namaz:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(147,112,219,0.25);
+      border-color: rgba(201,168,76,0.5);
+    }
+
     .btn-secondary:hover {
       background: var(--blue-dim);
       border-color: rgba(99,179,237,0.3);
@@ -798,6 +839,7 @@
       <li><a href="#about">О проекте</a></li>
       <li><a href="#projects">Проекты</a></li>
       <li><a href="#safety">Безопасность</a></li>
+      <li><a href="namaz.html" class="nav-namaz-link">🌙 Намаз</a></li>
       <li><a href="#howto">Как продать</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#tips">Советы</a></li>
@@ -821,6 +863,10 @@
       <a href="#projects" class="btn-secondary">
         Посмотреть проекты
       </a>
+      <a href="namaz.html" class="btn-namaz">
+        🌙 Намаз уақыты
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="margin-left:2px;"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </div>
   </div>
 </section>
@@ -843,6 +889,135 @@
 
   </div>
 </div>
+
+<!-- NAMAZ BANNER -->
+<section style="position:relative;z-index:1;padding:40px 24px 0;">
+  <div style="max-width:1100px;margin:0 auto;">
+
+    <!-- Big beautiful card -->
+    <a href="namaz.html" style="text-decoration:none;display:block;" id="namazBanner">
+      <div style="
+        position:relative;overflow:hidden;
+        background:linear-gradient(135deg,#0d1020 0%,#0a0e1a 50%,#0d1525 100%);
+        border:1px solid rgba(147,112,219,0.25);
+        border-radius:28px;padding:0;
+        box-shadow:0 20px 60px rgba(0,0,0,0.4);
+        transition:transform 0.3s,box-shadow 0.3s;
+      " onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 28px 70px rgba(0,0,0,0.5)'"
+         onmouseout="this.style.transform='';this.style.boxShadow='0 20px 60px rgba(0,0,0,0.4)'">
+
+        <!-- Stars decoration -->
+        <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;">
+          <div style="position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:0.5;top:12%;left:8%;"></div>
+          <div style="position:absolute;width:1px;height:1px;border-radius:50%;background:#fff;opacity:0.4;top:30%;left:18%;"></div>
+          <div style="position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:0.6;top:18%;left:55%;"></div>
+          <div style="position:absolute;width:1px;height:1px;border-radius:50%;background:#fff;opacity:0.3;top:60%;left:72%;"></div>
+          <div style="position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:0.5;top:75%;left:85%;"></div>
+          <div style="position:absolute;width:1px;height:1px;border-radius:50%;background:#fff;opacity:0.4;top:45%;left:92%;"></div>
+          <!-- Glow -->
+          <div style="position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(147,112,219,0.12) 0%,transparent 70%);"></div>
+          <div style="position:absolute;bottom:-40px;left:20%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,0.07) 0%,transparent 70%);"></div>
+        </div>
+
+        <!-- Top accent line -->
+        <div style="height:2px;background:linear-gradient(90deg,transparent,rgba(147,112,219,0.6),rgba(201,168,76,0.6),transparent);"></div>
+
+        <div style="display:flex;align-items:stretch;flex-wrap:wrap;">
+
+          <!-- LEFT CONTENT -->
+          <div style="flex:1;min-width:280px;padding:36px 40px;">
+            <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:999px;background:rgba(147,112,219,0.12);border:1px solid rgba(147,112,219,0.25);margin-bottom:20px;">
+              <span style="font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#9370db;">☪️ Исламский раздел</span>
+            </div>
+            <h2 style="font-family:'Unbounded',sans-serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;letter-spacing:-0.03em;line-height:1.2;margin-bottom:12px;background:linear-gradient(135deg,#fff 30%,#c9a84c 65%,#9370db 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+              Намаз уақыты<br>Алматы & Астана
+            </h2>
+            <p style="color:#718096;font-size:0.92rem;line-height:1.7;max-width:400px;margin-bottom:28px;">
+              Точное расписание всех 6 намазов по методу ДУМК. Живой обратный отсчёт, переключение между городами и хиджри-календарь.
+            </p>
+            <div style="display:inline-flex;align-items:center;gap:10px;padding:13px 28px;border-radius:14px;background:linear-gradient(135deg,#9370db,#c9a84c);color:#fff;font-family:'Inter',sans-serif;font-size:0.92rem;font-weight:700;box-shadow:0 8px 28px rgba(147,112,219,0.35);">
+              🌙 Открыть расписание
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+
+          <!-- RIGHT — LIVE TIMES WIDGET -->
+          <div style="flex-shrink:0;min-width:260px;padding:32px 36px;border-left:1px solid rgba(147,112,219,0.12);display:flex;flex-direction:column;justify-content:center;gap:8px;background:rgba(0,0,0,0.15);">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+              <span style="font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#9370db;">Следующий намаз</span>
+              <span style="font-size:1.4rem;animation:moonFloat2 6s ease-in-out infinite;">🌙</span>
+            </div>
+            <div style="font-family:'Unbounded',sans-serif;font-size:2.4rem;font-weight:800;color:#c9a84c;letter-spacing:-0.04em;line-height:1;" id="bnTime">--:--</div>
+            <div style="font-family:'Unbounded',sans-serif;font-size:0.9rem;font-weight:700;color:#fff;" id="bnName">—</div>
+            <div style="font-size:0.75rem;color:#718096;margin-top:2px;" id="bnCd">загрузка...</div>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);">
+              <div style="display:flex;gap:12px;">
+                <div style="flex:1;text-align:center;padding:10px 8px;border-radius:12px;background:rgba(147,112,219,0.08);border:1px solid rgba(147,112,219,0.15);cursor:pointer;" id="bnTab0" onclick="bnSwitch(0)">
+                  <div style="font-size:0.6rem;color:#9370db;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:2px;">Алматы</div>
+                  <div style="font-family:'Unbounded',sans-serif;font-size:0.75rem;font-weight:700;color:#e8e0f0;" id="bnA">--:--</div>
+                </div>
+                <div style="flex:1;text-align:center;padding:10px 8px;border-radius:12px;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.12);cursor:pointer;" id="bnTab1" onclick="bnSwitch(1)">
+                  <div style="font-size:0.6rem;color:#c9a84c;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:2px;">Астана</div>
+                  <div style="font-family:'Unbounded',sans-serif;font-size:0.75rem;font-weight:700;color:#e8e0f0;" id="bnB">--:--</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<style>
+@keyframes moonFloat2 { 0%,100%{transform:translateY(0) rotate(-10deg)} 50%{transform:translateY(-7px) rotate(-10deg)} }
+@media(max-width:640px){
+  #namazBanner > div > div { flex-direction:column!important; }
+  #namazBanner > div > div > div:last-child { border-left:none!important;border-top:1px solid rgba(147,112,219,0.12)!important; }
+}
+</style>
+
+<script>
+(function(){
+  const R=Math.PI/180,D=180/Math.PI;
+  const CITIES=[{lat:43.238,lng:76.946,tz:5},{lat:51.128,lng:71.430,tz:5}];
+  const PR=[{k:'fajr'},{k:'sunrise'},{k:'dhuhr'},{k:'asr'},{k:'maghrib'},{k:'isha'}];
+  const NAMES=['Фаджр','Восход','Зухр','Аср','Магриб','Иша'];
+  function jd(y,m,d){if(m<=2){y--;m+=12;}const A=Math.floor(y/100),B=2-A+Math.floor(A/4);return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5;}
+  function sun(j){const T=(j-2451545)/36525,L0=280.46646+36000.76983*T,M=357.52911+35999.05029*T,e=0.016708634-0.000042037*T,C=(1.914602-0.004817*T)*Math.sin(M*R)+(0.019993-0.000101*T)*Math.sin(2*M*R),om=125.04-1934.136*T,lam=L0+C-0.00569-0.00478*Math.sin(om*R),eps=23.439291-0.013004*T+0.00256*Math.cos(om*R),decl=Math.asin(Math.sin(eps*R)*Math.sin(lam*R))*D,y2=Math.tan((eps/2)*R)**2,eqt=(y2*Math.sin(2*L0*R)-2*e*Math.sin(M*R)+4*e*y2*Math.sin(M*R)*Math.cos(2*L0*R)-0.5*y2*y2*Math.sin(4*L0*R)-1.25*e*e*Math.sin(2*M*R))*D*4;return{decl,eqt};}
+  function ha(lat,decl,alt){return Math.acos(Math.max(-1,Math.min(1,(Math.sin(alt*R)-Math.sin(lat*R)*Math.sin(decl*R))/(Math.cos(lat*R)*Math.cos(decl*R)))))*D;}
+  function fmt(m){m=((m%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(Math.round(m%60)).padStart(2,'0');}
+  function t2m(t){const[h,m]=t.split(':').map(Number);return h*60+m;}
+  function calc(date,lat,lng,tz){const j=jd(date.getFullYear(),date.getMonth()+1,date.getDate())+0.5,{decl,eqt}=sun(j),noon=720-lng*4-eqt+tz*60,haR=ha(lat,decl,-0.8333),asrA=Math.atan(1/(2+Math.tan(Math.abs(lat-decl)*R)))*D;return{fajr:fmt(noon-ha(lat,decl,-15)*4),sunrise:fmt(noon-haR*4),dhuhr:fmt(noon+1),asr:fmt(noon+ha(lat,decl,asrA)*4),maghrib:fmt(noon+haR*4+1),isha:fmt(noon+ha(lat,decl,-15)*4)};}
+  let bnCity=0;
+  window.bnSwitch=function(i){
+    bnCity=i;
+    document.getElementById('bnTab0').style.borderColor=i===0?'rgba(147,112,219,0.4)':'rgba(147,112,219,0.15)';
+    document.getElementById('bnTab1').style.borderColor=i===1?'rgba(201,168,76,0.35)':'rgba(201,168,76,0.12)';
+    update();
+  };
+  function update(){
+    const now=new Date(),c=CITIES[bnCity],times=calc(now,c.lat,c.lng,c.tz);
+    const ta=calc(now,CITIES[0].lat,CITIES[0].lng,CITIES[0].tz);
+    const tb=calc(now,CITIES[1].lat,CITIES[1].lng,CITIES[1].tz);
+    const cur=now.getHours()*60+now.getMinutes();
+    let nxt=null,nm=Infinity;
+    PR.forEach((p,i)=>{const m=t2m(times[p.k]);if(m>cur&&m<nm){nm=m;nxt=i;}});
+    if(nxt===null){nm=t2m(times.fajr)+1440;nxt=0;}
+    const diff=nm-cur,hh=Math.floor(diff/60),mm=diff%60;
+    // find next for each city
+    let nxtA=null,nxtB=null,nmA=Infinity,nmB=Infinity;
+    PR.forEach((p,i)=>{const mA=t2m(ta[p.k]),mB=t2m(tb[p.k]);if(mA>cur&&mA<nmA){nmA=mA;nxtA=p.k;}if(mB>cur&&mB<nmB){nmB=mB;nxtB=p.k;}});
+    document.getElementById('bnTime').textContent=times[PR[nxt].k];
+    document.getElementById('bnName').textContent=NAMES[nxt];
+    document.getElementById('bnCd').textContent='через '+(hh>0?hh+'ч ':'')+mm+'мин · '+(bnCity===0?'Алматы':'Астана');
+    document.getElementById('bnA').textContent=nxtA?ta[nxtA]:'--:--';
+    document.getElementById('bnB').textContent=nxtB?tb[nxtB]:'--:--';
+  }
+  update();
+  setInterval(update,30000);
+})();
+</script>
 
 <!-- ABOUT -->
 <section class="about" id="about">
